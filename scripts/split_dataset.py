@@ -2,6 +2,7 @@ import argparse
 import shutil
 import random
 from pathlib import Path
+from rich.console import Console
 
 def split_dataset(images_path, labels_path, output_root, train_ratio=0.7, val_ratio=0.2, seed=42):
     """
@@ -15,11 +16,13 @@ def split_dataset(images_path, labels_path, output_root, train_ratio=0.7, val_ra
         val_ratio: 验证集比例
         seed: 随机数种子
     """
+
+    console = Console()
     
     # 验证比例总和正确
     total_ratio = train_ratio + val_ratio
     if total_ratio > 1.0:
-        raise ValueError(f"验证集和训练集比例的和不能大于 1.0，当前为{total_ratio}")
+        raise ValueError(f"验证集和训练集比例之和不能大于 1.0，当前为 {total_ratio}")
 
     # 设置路径
     image_dir = Path(images_path)
@@ -54,9 +57,9 @@ def split_dataset(images_path, labels_path, output_root, train_ratio=0.7, val_ra
         if label_path.exists():
             data_pairs.append((image_path, label_path))
         else:
-            print(f"警告: 找不到标签文件 {label_path}")
+            console.print(f"警告: 找不到标签文件 {label_path}", style="bold yellow")
     
-    print(f"找到 {len(data_pairs)} 个有效的图片-标签对")
+    console.print(f"找到 {len(data_pairs)} 个有效的图片-标签对")
     
     # 随机打乱并分割
     random.seed(seed)
@@ -70,9 +73,9 @@ def split_dataset(images_path, labels_path, output_root, train_ratio=0.7, val_ra
     val_pairs = data_pairs[n_train:n_train + n_val]
     test_pairs = data_pairs[n_train + n_val:]
     
-    print(f"训练集: {len(train_pairs)} 个样本")
-    print(f"验证集: {len(val_pairs)} 个样本")
-    print(f"测试集: {len(test_pairs)} 个样本")
+    console.print(f"训练集: {len(train_pairs)} 个样本")
+    console.print(f"验证集: {len(val_pairs)} 个样本")
+    console.print(f"测试集: {len(test_pairs)} 个样本")
     
     # 复制文件
     def copy_files(pairs, img_dir, lbl_dir):
@@ -84,7 +87,7 @@ def split_dataset(images_path, labels_path, output_root, train_ratio=0.7, val_ra
     copy_files(val_pairs, val_image_dir, val_label_dir)
     copy_files(test_pairs, test_image_dir, test_label_dir)
     
-    print("数据集分割完成！")
+    console.print("数据集分割完成！", style="bold green")
 
 def main():
     parser = argparse.ArgumentParser(description="分割数据集为训练集、验证集和测试集")

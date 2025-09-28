@@ -1,0 +1,10 @@
+path: detect-0.7-0.2
+
+train: images/train
+val: images/val
+test: images/test
+
+names: 
+  0: low
+  1: medium
+  2: high

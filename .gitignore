@@ -11,10 +11,16 @@ tasks
 # 原始数据和标签
 data
 
-# 训练模型、结果、数据集
+# YOLO 数据集、运行结果、模型权重、
 datasets
 runs
 weights
+
+# 日志
+*.log
+
+# 模型
+*.pt
 
 # 暂时不会完成的
 docs
