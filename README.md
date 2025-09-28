@@ -7,9 +7,11 @@
 ```sh
 cd training
 # 训练
-yolo train model=yolo11n.pt data="car.yaml"
+just detect_train 10 0.01
+# 验证
+just detect_val train-10-0.01 test
 # 预测
-yolo predict model=yolo11n.pt source="../data/images"
+just detect_predict train-10-0.01 ../data/images
 ```
 
 前端 React + Vite
