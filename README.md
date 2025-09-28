@@ -2,16 +2,21 @@
 
 数据标注 X-AnyLabeling
 
+```sh
+# 分割数据集
+just split_dataset car 0.7 0.2
+```
+
 模型 YOLO
 
 ```sh
 cd training
 # 训练
-just detect_train 10 0.01
+just detect_train yolo11n.pt 10 0.01
 # 验证
-just detect_val train-10-0.01 test
+just detect_val train-yolo11n.pt-10-0.01 test
 # 预测
-just detect_predict train-10-0.01 ../data/images
+just detect_predict train-yolo11n.pt-10-0.01 ../data/images
 ```
 
 前端 React + Vite

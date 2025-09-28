@@ -8,26 +8,27 @@ split_dataset NAME TRAIN_RATIO VAL_RATIO:
         --val-ratio {{VAL_RATIO}}
 
 # 训练参数参考 https://docs.ultralytics.com/zh/modes/train/#train-settings
+# 可用的预训练模型参考 https://docs.ultralytics.com/zh/models/
 
 # 目标检测模型训练
-detect_train epochs lr:
+detect_train model epochs lr:
     cd training && \
     yolo detect train \
         data="detect.yaml" \
-        model="yolo11n.pt" \
+        model={{model}} \
         epochs={{epochs}} \
         lr0={{lr}} \
-        name="train-{{epochs}}-{{lr}}"
+        name="train-{{model}}-{{epochs}}-{{lr}}"
 
 # 语义分割模型训练
-segment_train epochs lr:
+segment_train model epochs lr:
     cd training && \
     yolo segment train \
         data="segment.yaml" \
-        model="yolo11n-seg.pt" \
+        model={{model}} \
         epochs={{epochs}} \
         lr0={{lr}} \
-        name="train-{{epochs}}-{{lr}}"
+        name="train-{{model}}-{{epochs}}-{{lr}}"
 
 # 验证参数参考 https://docs.ultralytics.com/zh/modes/val/#arguments-for-yolo-model-validation
 
@@ -66,3 +67,14 @@ segment_predict model source:
         model="runs/segment/{{model}}/weights/best.pt" \
         source={{source}} \
         name="predict-{{model}}"
+
+# 启动后端开发服务器
+fastapi_dev:
+    cd backend && \
+    fastapi dev main.py
+
+
+# 启动前端开发服务器
+react_dev:
+    cd frontend && \
+    npm run dev
