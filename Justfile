@@ -1,13 +1,13 @@
 set windows-shell := ["pwsh.exe", "-c"]
 
 # 分割数据集
-split_dataset NAME TRAIN_RATIO VAL_RATIO: 
+split_dataset name train_ratio val_ratio: 
     python scripts/split_dataset.py \
-        --images "data/images" \
-        --labels "data/{{NAME}}_labels" \
-        --output "training/datasets/{{NAME}}-{{TRAIN_RATIO}}-{{VAL_RATIO}}" \
-        --train-ratio {{TRAIN_RATIO}} \
-        --val-ratio {{VAL_RATIO}}
+        --images "data/{{name}}/images" \
+        --labels "data/{{name}}/labels" \
+        --output "training/datasets/{{name}}-{{train_ratio}}-{{val_ratio}}" \
+        --train-ratio {{train_ratio}} \
+        --val-ratio {{val_ratio}}
 
 # 训练参数参考 https://docs.ultralytics.com/zh/modes/train/#train-settings
 # 可用的预训练模型参考 https://docs.ultralytics.com/zh/models/
