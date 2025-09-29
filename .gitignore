@@ -11,10 +11,11 @@ tasks/
 # 原始数据和标签
 data/
 
-# YOLO 数据集、运行结果、模型权重、
+# 训练数据
 datasets/
 runs/
 weights/
+training/
 
 # 日志
 *.log

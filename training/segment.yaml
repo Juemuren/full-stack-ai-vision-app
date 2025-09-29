@@ -1,9 +1,0 @@
-path: segment-0.7-0.2
-
-train: images/train
-val: images/val
-test: images/test
-
-names:
-  0: water
-  1: not_water
