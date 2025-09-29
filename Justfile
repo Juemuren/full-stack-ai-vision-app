@@ -1,3 +1,5 @@
+set windows-shell := ["pwsh.exe", "-c"]
+
 # 分割数据集
 split_dataset NAME TRAIN_RATIO VAL_RATIO: 
     python scripts/split_dataset.py \

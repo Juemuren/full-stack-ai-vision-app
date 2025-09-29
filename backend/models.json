@@ -1,0 +1,28 @@
+{
+    "models": [
+        {
+            "id": "yolo11n",
+            "path": "../training/runs/detect/train-yolo11n.pt-10-0.01/weights/best.pt",
+            "name": "车辆淹没部位判别 v11",
+            "description": "基于 yolo11n 的车辆淹没部位判别模型"
+        },
+        {
+            "id": "yolo12n",
+            "path": "../training/runs/detect/train-yolo12n.pt-10-0.01/weights/best.pt",
+            "name": "车辆淹没部位判别 v12",
+            "description": "基于 yolo12n 的车辆淹没部位判别模型"
+        },
+        {
+            "id": "yolo11n-seg",
+            "path": "../training/runs/segment/train-yolo11n-seg.pt-10-0.01/weights/best.pt",
+            "name": "水面分割 v11",
+            "description": "基于 yolo11n-seg 的水面分割模型"
+        },
+        {
+            "id": "yolov12n-seg",
+            "path": "../training/runs/segment/train-yolov12n-seg.pt-10-0.01/weights/best.pt",
+            "name": "水面分割 v12",
+            "description": "基于 yolov12n-seg 的水面分割模型"
+        }
+    ]
+}

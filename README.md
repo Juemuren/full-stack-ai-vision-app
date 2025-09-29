@@ -4,7 +4,7 @@
 
 ```sh
 # 分割数据集
-just split_dataset car 0.7 0.2
+just split_dataset detect 0.7 0.2
 ```
 
 模型 YOLO
