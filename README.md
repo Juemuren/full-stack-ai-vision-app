@@ -55,6 +55,10 @@ names:
 
 请确保激活了正确的环境，并且安装了 YOLO
 
+### YOLO CLI
+
+YOLO CLI 提供了丰富的参数可以设置，基本上涵盖了所有的需求，很少有需要写代码的情况
+
 ```sh
 cd training
 # 更详细的设置可参考 https://docs.ultralytics.com/zh/modes
@@ -63,6 +67,8 @@ yolo train data="path/to/data.yaml" model=yolo11n.pt epochs=10 batch=4 lr0=0.01
 # 验证
 yolo val model="path/to/best.pt" split=test
 ```
+
+### Just
 
 同样可用 `just` 提高点效率，根目录运行即可
 
@@ -97,6 +103,16 @@ ansifilter -i output.log -o output_filtered.log
 ```sh
 just train_val_log coco8 yolo11n 10 4 0.01
 ```
+
+### Jupyter
+
+如果 YOLO CLI 满足不了你的非常特殊的需求，那么可能需要使用 Python 接口
+
+不过我不推荐直接写 .py 脚本。使用 `Jupyter` 可能更好，这在科学计算、机器学习中非常流行
+
+先在训练环境里 `pip install ipykernel`，再安装 `VSCode` 的 `Jupyter` 拓展，最后新建一个 `.ipynb` 格式的文件并选择内核
+
+编程笔记本中代码被分成一个个单元格，点击运行后单元格里的代码会被发给 ipython 去执行。内核会记住程序的状态，不需要重新启动，这对于机器学习此类需要反复试验参数的场景帮助很大，可以节省很多时间
 
 ## 后端 FastAPI
 
