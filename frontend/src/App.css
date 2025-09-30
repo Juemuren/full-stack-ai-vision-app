@@ -17,6 +17,10 @@
 .upload-section input[type="file"] {
   display: none;
 }
+.preview-section, .result-section {
+  margin: 20px 0;
+}
+
 .upload-btn, .download-btn, .predict-btn, .model-select-btn {
   display: inline-block;
   background-color: #61dafb;
@@ -36,7 +40,6 @@
   background-color: #cccccc;
   cursor: not-allowed;
 }
-
 .model-select-btn {
   background: #fff;
 }
@@ -51,11 +54,6 @@
   gap: 40px;
   margin: 30px 0;
 }
-
-.preview-section, .result-section {
-  margin: 20px 0;
-}
-
 .image-container {
   margin: 20px auto;
   max-width: 600px;
@@ -75,15 +73,13 @@
   margin-left: auto;
   margin-right: auto;
 }
-
 .detection-details ul {
   list-style-type: none;
   padding: 0;
 }
-
 .detection-details li {
   background-color: rgba(255, 255, 255, 0.1);
-  text-align: left;
+  text-align: center;
   margin: 5px 0;
   padding: 8px;
   border-radius: 4px;

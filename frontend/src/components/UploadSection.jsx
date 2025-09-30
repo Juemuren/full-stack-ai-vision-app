@@ -21,7 +21,7 @@ function UploadSection({
         disabled={isProcessing}
       />
       <label htmlFor="file-upload" className="upload-btn">
-        {selectedFile ? '重新选择图片' : "选择图片"}
+        {selectedFile ? '重新上传图片' : "上传图片"}
       </label>
       <select
         className="model-select-btn"

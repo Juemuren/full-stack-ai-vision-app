@@ -1,4 +1,21 @@
 function ResultSection({ downloadUrl, predictObjectsNum, predictDetails }) {
+  const countByClass = predictDetails.reduce((acc, curr) => {
+    const name = curr.class
+    const confidence = curr.confidence
+
+    if (!acc[name]) {
+      acc[name] = {
+        count: 0,
+        totalConfidence: 0,
+      };
+    }
+
+    acc[name].count += 1;
+    acc[name].totalConfidence += confidence;
+    return acc
+  }, {})
+
+
   if (!downloadUrl) return null;
   return (
     <div className="result-section">
@@ -16,11 +33,15 @@ function ResultSection({ downloadUrl, predictObjectsNum, predictDetails }) {
       <details className="detection-details">
         <summary>识别到 {predictObjectsNum} 个物体</summary>
         <ul>
-          {predictDetails.map((item, index) => (
-            <li key={index}>
-              物体: {item.class}, 置信度: {(item.confidence * 100).toFixed(1)}%
-            </li>
-          ))}
+          {
+            Object.entries(countByClass).map(([name, { count, totalConfidence }]) => (
+              <li key={name}>
+                <strong>{name}</strong>
+                <p>数量: {count}</p>
+                <p>平均置信度: {(totalConfidence * 100 / count).toFixed(3)}%</p>
+              </li>
+            ))
+          }
         </ul>
       </details>
     </div>
