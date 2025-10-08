@@ -20,8 +20,5 @@ training/
 # 日志
 *.log
 
-# 模型
-*.pt
-
 # 缓存
 __pycache__/
