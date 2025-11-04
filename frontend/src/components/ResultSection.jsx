@@ -1,4 +1,4 @@
-function ResultSection({ downloadUrl, predictObjectsNum, predictDetails }) {
+function ResultSection({ downloadUrls, predictObjectsNum, predictDetails }) {
   const countByClass = predictDetails.reduce((acc, curr) => {
     const name = curr.class
     const confidence = curr.confidence
@@ -15,21 +15,25 @@ function ResultSection({ downloadUrl, predictObjectsNum, predictDetails }) {
     return acc
   }, {})
 
-
-  if (!downloadUrl) return null;
+  if (downloadUrls.length === 0) return null;
   return (
     <div className="result-section">
       <h3>识别结果</h3>
-      <div className="image-container">
-        <img src={downloadUrl} alt="检测结果" className="result-image" />
-      </div>
-      <a
-        href={downloadUrl}
-        download="result.jpg"
-        className="download-btn"
-      >
-        下载结果图片
-      </a>
+      {downloadUrls.map((downloadUrl, i) => (
+        <div key={i}>
+          <div className="image-container">
+            <img src={downloadUrl} alt="检测结果" className="result-image" />
+          </div>
+          <a
+            href={downloadUrl}
+            download="result.jpg"
+            className="download-btn"
+          >
+            下载结果图片
+          </a>
+        </div>
+      ))}
+
       <details className="detection-details">
         <summary>识别到 {predictObjectsNum} 个物体</summary>
         <ul>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
-import { fetchModels, predictImage } from './api/predict';
+import { fetchModels, predictImages } from './api/predict';
 
 import UploadSection from './components/UploadSection';
 import PreviewSection from './components/PreviewSection';
@@ -9,18 +9,17 @@ import ResultSection from './components/ResultSection';
 
 function App() {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedModel, setSelectedModel] = useState('');
+  const [selectedModels, setSelectedModels] = useState([]);
   const [models, setModels] = useState([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [downloadUrl, setDownloadUrl] = useState(null);
+  const [downloadUrls, setDownloadUrls] = useState([]);
   const [predictObjectsNum, setPredictObjectsNum] = useState(0);
   const [predictDetails, setPredictDetails] = useState([]);
 
   useEffect(() => {
     fetchModels().then((models) => {
       setModels(models);
-      if (models.length > 0) setSelectedModel(models[0].id);
     });
   }, []);
 
@@ -30,25 +29,37 @@ function App() {
       setSelectedFile(file);
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
-      setDownloadUrl(null);
-      setPredictObjectsNum(0);
-      setPredictDetails([]);
+      handleClear()
     }
   };
 
   const handleModelChange = (event) => {
-    setSelectedModel(event.target.value);
+    const selectedModel = event.target.value
+    if (!selectedModels.includes(selectedModel)) {
+      setSelectedModels(selectedModels.concat(selectedModel));
+    }
   };
 
   const handlePredict = async () => {
-    if (!selectedFile || !selectedModel) return;
+    if (!selectedFile || selectedModels.length === 0) return;
     setIsProcessing(true);
     try {
-      const result = await predictImage(selectedFile, selectedModel);
-      setPredictObjectsNum(result.predictObjectsNum);
-      setPredictDetails(result.predictDetails);
-      const url = URL.createObjectURL(result.imageBlob);
-      setDownloadUrl(url);
+      const results = await predictImages(selectedFile, selectedModels);
+
+      const newUrls = []
+      const newDetails = []
+      let newObjectsCount = 0
+      
+      results.forEach(result => {
+        newUrls.push(URL.createObjectURL(result.imageBlob))
+        newDetails.push(result.predictDetails)
+        newObjectsCount += result.predictObjectsNum
+      });
+
+      setDownloadUrls(newUrls)
+      setPredictDetails(newDetails.flat())
+      setPredictObjectsNum(newObjectsCount)
+
     } catch (error) {
       console.error('Error:', error);
       alert('处理失败，请重试');
@@ -56,6 +67,16 @@ function App() {
       setIsProcessing(false);
     }
   };
+
+  const handleClearResults = () => {
+    setDownloadUrls([])
+    setPredictDetails([])
+    setPredictObjectsNum(0)
+  }
+
+  const handleClearModels = () => {
+    setSelectedModels([])
+  }
 
   return (
     <div className="App">
@@ -65,18 +86,21 @@ function App() {
           onFileSelect={handleFileSelect}
           onPredict={handlePredict}
           onModelChange={handleModelChange}
+          onClear={handleClearResults}
+          onReset={handleClearModels}
           selectedFile={selectedFile}
-          selectedModel={selectedModel}
+          selectedModel={selectedModels}
           models={models}
           isProcessing={isProcessing}
+          isStarted={downloadUrls.length !== 0}
         />
         <div className="image-row">
-        <PreviewSection previewUrl={previewUrl} />
-        <ResultSection
-          downloadUrl={downloadUrl}
-          predictObjectsNum={predictObjectsNum}
-          predictDetails={predictDetails}
-        />
+          <PreviewSection previewUrl={previewUrl} />
+          <ResultSection
+            downloadUrls={downloadUrls}
+            predictObjectsNum={predictObjectsNum}
+            predictDetails={predictDetails}
+          />
         </div>
       </header>
     </div>

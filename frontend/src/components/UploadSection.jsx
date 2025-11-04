@@ -2,9 +2,12 @@ function UploadSection({
   onFileSelect,
   onModelChange,
   onPredict,
+  onClear,
+  onReset,
   selectedFile,
   selectedModel,
   isProcessing,
+  isStarted,
   models,
 }) {
   const showDescription = () => {
@@ -24,6 +27,7 @@ function UploadSection({
         {selectedFile ? '重新上传图片' : "上传图片"}
       </label>
       <select
+        multiple
         className="model-select-btn"
         value={selectedModel}
         onChange={onModelChange}
@@ -35,8 +39,8 @@ function UploadSection({
           </option>
         ))}
       </select>
-      <button onClick={showDescription}>
-        ?
+      <button onClick={onReset}>
+        重置选项
       </button>
       {selectedFile && selectedModel && (
         <button
@@ -45,6 +49,11 @@ function UploadSection({
           className="predict-btn"
         >
           {isProcessing ? '识别中' : '开始识别'}
+        </button>
+      )}
+      {isStarted && (
+        <button onClick={onClear} className="clear-btn">
+          清除结果
         </button>
       )}
     </div>

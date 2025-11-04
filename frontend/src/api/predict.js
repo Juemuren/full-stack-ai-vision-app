@@ -1,5 +1,12 @@
 import axios from 'axios';
 
+export async function predictImages(file, modelIds) {
+  const pridicts = modelIds.map(modelId => predictImage(file, modelId))
+  const results = await Promise.all(pridicts)
+
+  return results
+}
+
 export async function predictImage(file, modelId) {
   const formData = new FormData();
   formData.append('file', file);

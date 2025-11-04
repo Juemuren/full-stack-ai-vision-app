@@ -21,7 +21,7 @@
   margin: 20px 0;
 }
 
-.upload-btn, .download-btn, .predict-btn, .model-select-btn {
+.upload-btn, .download-btn, .predict-btn, .clear-btn, .model-select-btn {
   display: inline-block;
   background-color: #61dafb;
   color: #282c34;
@@ -35,6 +35,10 @@
 .upload-btn:hover, .download-btn:hover, .predict-btn:hover {
   background-color: #21a1f3;
   color: #fff;
+}
+.clear-btn:hover {
+  background-color: #f3934e;
+  color: #000000;
 }
 .predict-btn:disabled {
   background-color: #cccccc;
