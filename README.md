@@ -2,7 +2,7 @@
 
 一个完整的 AI 图像识别应用，从数据标注到模型训练，再到后端和前端的搭建。由于原始数据和训练过程中产生文件占用了很大的存储空间，因此没有包含在这个仓库里
 
-目前应用暂时无法部署到互联网上，只能下载仓库后在本地使用。请参考[后端](#后端)和[前端](#前端)两个章节了解如何启动开发服务器
+目前应用暂时没有部署到互联网上，因此只能下载仓库后在本地使用。请参考[后端](#后端)和[前端](#前端)两个章节了解如何启动开发服务器
 
 - [全栈图像识别应用](#全栈图像识别应用)
   - [数据准备](#数据准备)
@@ -27,16 +27,18 @@
 标注完成后可以使用以下脚本分割数据集
 
 ```sh
+cd training
 python scripts/split_dataset.py --images "path/to/images" --labels "path/to/labels" --output "path/to/output" --train-ratio 0.7 --val-ratio 0.1
 ```
 
 我用 `just` 将该命令包装成了更易用的形式，不过使用该方法要求安装了 `just`，且原始图片和标签应按如下方式存放
 
 ```txt
-data
-└── dataset_name
-    ├── images
-    └── labels
+training
+└── data
+    └── dataset_name
+        ├── images
+        └── labels
 ```
 
 准备好后运行如下命令即可
@@ -69,7 +71,7 @@ names:
 
 ## 模型训练
 
-请确保激活了正确的环境，并且安装了 YOLO
+请确保激活了正确的环境，并且安装了 **YOLO**。更详细的依赖项可以参考 `training/requirements.txt` 文件，但不建议直接使用 `pip -r requirements.txt` 安装依赖，因为这无法保证与你机器上的 CUDA 版本一致。
 
 ### YOLO CLI
 
@@ -126,11 +128,9 @@ just train_val_log coco8 yolo11n 10 4 0.01
 
 如果 YOLO CLI 满足不了你的非常特殊的需求，那么你可能需要使用 YOLO 的 Python 接口
 
-不过我不推荐直接写 .py 脚本。使用 `Jupyter` 可能更好，这在科学计算、机器学习中非常流行
+不过我不推荐直接写 `python` 脚本。使用 `Jupyter` 可能更好，这在科学计算、机器学习中非常流行
 
-先在训练环境里 `pip install ipykernel`，再安装 `VSCode` 的 `Jupyter` 拓展，最后新建一个 `.ipynb` 格式的文件并选择正确的内核就可以开始编写代码了
-
-`.ipynb` 文件中代码被分成了一个个单元格，点击运行后单元格里的代码会被发给 ipython 内核去执行。该内核会记住程序的状态，不需要重新启动解释器。这对于机器学习此类需要反复试验参数的场景帮助很大，可以节省很多时间
+在 `training/training.ipynb` 里有我使用的训练代码
 
 ## 后端
 
