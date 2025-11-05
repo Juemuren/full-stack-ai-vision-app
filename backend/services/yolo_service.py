@@ -2,6 +2,7 @@ from ultralytics import YOLO
 from PIL import Image
 import io
 
+
 class YOLOService:
     def __init__(self, model_path):
         self.model = YOLO(model_path)

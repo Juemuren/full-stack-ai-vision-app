@@ -1,11 +1,12 @@
 set windows-shell := ["pwsh.exe", "-nop", "-c"]
 
 # 分割数据集
-split_dataset dataset_name train_ratio val_ratio: 
+split_dataset dataset_name train_ratio val_ratio:
+    cd training && \
     python scripts/split_dataset.py \
         --images "data/{{dataset_name}}/images" \
         --labels "data/{{dataset_name}}/labels" \
-        --output "training/datasets/{{dataset_name}}-{{train_ratio}}-{{val_ratio}}" \
+        --output "datasets/{{dataset_name}}-{{train_ratio}}-{{val_ratio}}" \
         --train-ratio {{train_ratio}} \
         --val-ratio {{val_ratio}}
 
