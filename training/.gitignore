@@ -1,0 +1,19 @@
+# 二进制文件
+bin/
+
+# 原始数据和标签
+data/
+
+# 数据集
+datasets/
+*.yaml
+
+# 运行结果
+runs/
+
+# 训练日志
+*.log
+
+# 模型
+weights/
+*.pt

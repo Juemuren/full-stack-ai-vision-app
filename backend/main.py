@@ -15,9 +15,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/api")
 def read_root():
     return {"Hello": "World"}
+
 
 # 注册预测路由
 app.include_router(predict_router)

@@ -1,24 +1,6 @@
 # 编辑器
 .vscode/
 
-# 二进制文件
-bin/
-
 # 课程材料
 report/
 tasks/
-
-# 原始数据和标签
-data/
-
-# 训练数据
-datasets/
-runs/
-weights/
-training/
-
-# 日志
-*.log
-
-# 缓存
-__pycache__/
